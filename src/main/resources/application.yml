@@ -1,11 +1,18 @@
 server:
   port: 8070
 
+# --- EUREKA SERVER CONFIGURATION ---
 eureka:
   instance:
     hostname: localhost
   client:
+    # By default, EVERY Spring Boot app with the Eureka dependency tries to register itself with a Eureka Server.
+    # Since THIS application IS the Eureka Server itself, we don't want it trying to register with itself!
     register-with-eureka: false
+    
+    # Similarly, this tells the server not to try and fetch the registry of other services from itself.
     fetch-registry: false
+    
+    # The URL where this Eureka Server is accessible. Microservices will point to this URL.
     service-url:
       defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
